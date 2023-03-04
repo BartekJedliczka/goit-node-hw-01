@@ -1,0 +1,19 @@
+{
+  "name": "goit-node-hw-01",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BartekJedliczka/goit-node-hw-01.git"
+  },
+  "author": "Bartek Jedliczka",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BartekJedliczka/goit-node-hw-01/issues"
+  },
+  "homepage": "https://github.com/BartekJedliczka/goit-node-hw-01#readme"
+}
