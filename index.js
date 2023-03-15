@@ -1,22 +1,43 @@
-const argv = require("yargs").argv;
+const {
+  listContacts,
+  getContactById,
+  removeContact,
+  addContact,
+} = require("./contacts");
 
-// TODO: refaktor
-function invokeAction({ action, id, name, email, phone }) {
+const { Command } = require("commander");
+const program = new Command();
+program
+  .option("-a, --action <type>", "choose action")
+  .option("-i, --id <type>", "user id")
+  .option("-n, --name <type>", "user name")
+  .option("-e, --email <type>", "user email")
+  .option("-p, --phone <type>", "user phone");
+
+program.parse(process.argv);
+
+const argv = program.opts();
+
+async function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
     case "list":
-      // ...
+      const contacts = await listContacts();
+      console.table(contacts);
       break;
 
     case "get":
-      // ... id
+      const contact = await getContactById(id);
+      console.table(contact);
       break;
 
     case "add":
-      // ... name email phone
+      const newContact = await addContact(name, email, phone, id);
+      console.table(newContact);
       break;
 
     case "remove":
-      // ... id
+      const remContact = await removeContact(id);
+      console.table(remContact);
       break;
 
     default:
