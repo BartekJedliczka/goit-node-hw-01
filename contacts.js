@@ -1,23 +1,36 @@
 const fs = require("fs").promises;
 const path = require("path");
-const contactsPath = path.resolve("./db/contacts.json");
+const contactsPath = path.resolve(__dirname, "./db/contacts.json");
 
-// TODO: udokumentuj każdą funkcję
 async function listContacts() {
   const data = await fs.readFile(contactsPath);
   return JSON.parse(data);
-  // console.log(JSON.parse(data));
 }
-listContacts();
 
-// function getContactById(contactId) {
-//   // ...twój kod
-// }
+async function getContactById(contactId) {
+  const contacts = await listContacts();
+  const contact = contacts.find(({ id }) => id === contactId);
+  return contact;
+}
 
-// function removeContact(contactId) {
-//   // ...twój kod
-// }
+async function removeContact(contactId) {
+  const contacts = await listContacts();
+  const newContacts = contacts.filter(({ id }) => id !== contactId);
+  await fs.writeFile(contactsPath, JSON.stringify(newContacts, null, 2));
+  return newContacts;
+}
 
-// function addContact(name, email, phone) {
-//   // ...twój kod
-// }
+async function addContact(name, email, phone, id) {
+  const contact = { name, email, phone, id };
+  const contacts = await listContacts();
+  contacts.push(contact);
+  await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
+  return contact;
+}
+
+module.exports = {
+  listContacts,
+  getContactById,
+  removeContact,
+  addContact,
+};
